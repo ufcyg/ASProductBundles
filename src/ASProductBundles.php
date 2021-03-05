@@ -2,6 +2,7 @@
 
 namespace ASProductBundles;
 
+use Shopware\Core\Framework\DataAbstractionLayer\Indexing\EntityIndexerRegistry;
 use Shopware\Core\Framework\Plugin;
 use Shopware\Core\Framework\Plugin\Context\ActivateContext;
 use Shopware\Core\Framework\Plugin\Context\DeactivateContext;
@@ -34,6 +35,9 @@ class ASProductBundles extends Plugin
     /** @inheritDoc */
     public function activate(ActivateContext $activateContext): void
     {
+        /** @var EntityIndexerRegistry $registry */
+        $registry = $this->container->get(EntityIndexerRegistry::class);
+        $registry->sendIndexingMessage(['product.indexer']);
     }
 
     /** @inheritDoc */

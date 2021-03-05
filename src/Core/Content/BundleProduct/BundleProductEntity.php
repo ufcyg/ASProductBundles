@@ -1,12 +1,11 @@
 <?php declare(strict_types=1);
 
-namespace ASProductBundles\Core\Content\Bundle;
+namespace ASProductBundles\Core\Content\BundleProduct;
 
-use Shopware\Core\Content\Product\ProductCollection;
 use Shopware\Core\Framework\DataAbstractionLayer\Entity;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityIdTrait;
 
-class BundleEntity extends Entity
+class BundleProductEntity extends Entity
 {
     use EntityIdTrait;
     
@@ -15,9 +14,6 @@ class BundleEntity extends Entity
 
     /** @var float */
     protected $discount;
-
-    /** @var ProductCollection|null $products */
-    protected $products;
 
     /** Get the value of discountType */ 
     public function getDiscountType(): string { return $this->discountType; }
@@ -37,17 +33,6 @@ class BundleEntity extends Entity
     public function setDiscount($discount)
     {
         $this->discount = $discount;
-
-        return $this;
-    }
-
-    /** Get the value of products */ 
-    public function getProducts(): ?ProductCollection { return $this->products; }
-
-    /** Set the value of products @return  self */ 
-    public function setProducts($products)
-    {
-        $this->products = $products;
 
         return $this;
     }
