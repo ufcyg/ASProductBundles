@@ -2,6 +2,7 @@
 
 namespace ASProductBundles;
 
+use Doctrine\DBAL\Connection;
 use Shopware\Core\Framework\DataAbstractionLayer\Indexing\EntityIndexerRegistry;
 use Shopware\Core\Framework\Plugin;
 use Shopware\Core\Framework\Plugin\Context\ActivateContext;
@@ -48,5 +49,16 @@ class ASProductBundles extends Plugin
     /** @inheritDoc */
     public function uninstall(UninstallContext $context): void
     {
+        if ($context->keepUserData()) {
+            parent::uninstall($context);
+
+            return;
+        }
+
+        $connection = $this->container->get(Connection::class);
+
+        $connection->executeUpdate('DROP TABLE IF EXISTS `as_bundle`');
+        $connection->executeUpdate('DROP TABLE IF EXISTS `as_bundle_product`');
+        $connection->executeUpdate('DROP TABLE IF EXISTS `as_bundle_translation`');
     }
 }
